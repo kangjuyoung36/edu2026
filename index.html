@@ -1,714 +1,328 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI & ART: 미래 미술의 경계와 윤리</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap');
-        
-        :root {
-            /* Light Mode Variables */
-            --art-primary: #4a5568;
-            --art-accent: #e53e3e;
-            --art-bg: #fcfaf8;
-            --text-dark: #1a202c;
-            --text-gray: #4a5568;
-            --white: #ffffff;
-            --nav-bg: rgba(255, 255, 255, 0.9);
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --switch-bg: #cbd5e0;
-            --quote-bg: #fff5f5;
-        }
-
-        [data-theme="dark"] {
-            /* Dark Mode Variables */
-            --art-primary: #a0aec0;
-            --art-accent: #ff4d4d;
-            --art-bg: #121212;
-            --text-dark: #f7fafc;
-            --text-gray: #cbd5e0;
-            --white: #1e1e1e;
-            --nav-bg: rgba(18, 18, 18, 0.9);
-            --card-bg: #1e1e1e;
-            --border-color: #333333;
-            --switch-bg: #4a5568;
-            --quote-bg: #2d1a1a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--art-bg);
-            color: var(--text-dark);
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Noto Serif KR', serif;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            height: 70vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1547891301-1749945012a5?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white; 
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero-tag {
-            font-size: 1.1rem;
-            letter-spacing: 0.2em;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        .hero-desc {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            font-weight: 300;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-        }
-
-        .btn-outline {
-            display: inline-block;
-            border: 1px solid white;
-            padding: 1rem 2.5rem;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline:hover {
-            background-color: white;
-            color: #000;
-        }
-
-        /* Navigation */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-family: 'Noto Serif KR', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: var(--text-dark);
-            letter-spacing: -0.05em;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-links {
-            display: none;
-        }
-
-        @media (min-width: 768px) {
-            .nav-links {
-                display: flex;
-                gap: 2rem;
-            }
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: var(--art-accent);
-        }
-
-        /* Theme Toggle Button */
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border-color);
-            padding: 8px;
-            cursor: pointer;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-dark);
-            width: 40px;
-            height: 40px;
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--border-color);
-        }
-
-        /* Main Sections */
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .divider {
-            width: 80px;
-            height: 4px;
-            background-color: var(--art-accent);
-            margin: 1.5rem auto;
-        }
-
-        /* Switch Section */
-        .switch-wrapper {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 100px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 650px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            transition: all 0.3s ease;
-            border: 2px solid var(--border-color);
-        }
-
-        .switch-wrapper:hover {
-            border-color: var(--art-accent);
-            transform: translateY(-5px);
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 100px;
-            height: 50px;
-            flex-shrink: 0;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            inset: 0;
-            background-color: var(--switch-bg);
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 40px;
-            width: 40px;
-            left: 5px;
-            bottom: 5px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        input:checked + .slider {
-            background-color: var(--art-accent);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(50px);
-        }
-
-        .switch-label {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .label-off { color: #a0aec0; }
-        .label-on { color: var(--text-dark); }
-
-        .info-text {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #a0aec0;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* News Section */
-        .news-section {
-            background-color: #1a202c;
-            color: white;
-            border-radius: 3rem;
-            margin: 2rem 0;
-            padding: 6rem 2rem;
-        }
-
-        [data-theme="dark"] .news-section {
-            background-color: #0a0a0a;
-            border: 1px solid #333;
-        }
-
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .news-card {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 2.5rem;
-            border-radius: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .news-card:hover {
-            border-color: var(--art-accent);
-            background-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.2rem 0.7rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            background-color: var(--art-accent);
-            color: white;
-        }
-
-        .news-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .news-card p {
-            font-size: 0.95rem;
-            color: #a0aec0;
-            margin-bottom: 1.5rem;
-        }
-
-        .news-footer {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.8rem;
-            font-style: italic;
-            color: #718096;
-        }
-
-        /* Ethics Section */
-        .ethics-flex {
-            display: flex;
-            flex-direction: column;
-            gap: 4rem;
-        }
-
-        @media (min-width: 768px) {
-            .ethics-flex {
-                flex-direction: row;
-            }
-            .ethics-aside { width: 33.33%; }
-            .ethics-content { width: 66.66%; }
-        }
-
-        .ethics-aside h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .quote-box {
-            background-color: var(--quote-bg);
-            padding: 1.5rem;
-            border-left: 4px solid var(--art-accent);
-            border-radius: 0 0.75rem 0.75rem 0;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .ethics-node {
-            position: relative;
-            padding-left: 2rem;
-            border-left: 2px solid var(--border-color);
-            margin-bottom: 3rem;
-        }
-
-        .ethics-node:last-child {
-            margin-bottom: 0;
-            border-left-color: transparent;
-        }
-
-        .ethics-node:before {
-            content: '';
-            position: absolute;
-            left: -9px;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            background-color: var(--art-primary);
-            border-radius: 50%;
-        }
-
-        .ethics-node h4 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .discussion-btn {
-            background: none;
-            border: none;
-            color: var(--art-accent);
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.9rem;
-            padding: 0;
-            margin-top: 1rem;
-        }
-
-        .discussion-panel {
-            display: none;
-            margin-top: 1rem;
-            padding: 1rem;
-            background-color: var(--white);
-            border: 1px solid var(--border-color);
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .discussion-panel.show {
-            display: block;
-        }
-
-        /* Footer */
-        footer {
-            padding: 4rem 0;
-            border-top: 1px solid var(--border-color);
-            background: var(--white);
-        }
-
-        .footer-inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .footer-inner { flex-direction: row; }
-        }
-
-        .copyright {
-            font-size: 0.8rem;
-            color: #a0aec0;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .text-center { text-align: center; }
-        .hidden { display: none; }
-    </style>
-</head>
-<body data-theme="light">
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-inner container">
-            <a href="#" class="logo">AI ART CLASS</a>
-            <div class="nav-right">
-                <div class="nav-links">
-                    <a href="#ethics-switch">수업 입장</a>
-                    <a href="#usecases">현장 뉴스</a>
-                    <a href="#ethics">미술 윤리</a>
-                </div>
-                <button id="theme-btn" class="theme-toggle" title="테마 변경">
-                    <svg id="sun-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
+import React, { useState } from 'react';
+import { Brain, Car, ShieldCheck, HelpCircle, ArrowRight, AlertCircle, CheckCircle2, User, Bot, Home } from 'lucide-react';
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('intro');
+  const [quizScore, setQuizScore] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [dilemmaChoice, setDilemmaChoice] = useState(null);
+
+  const tabs = [
+    { id: 'intro', label: '수업 소개', icon: <ShieldCheck className="w-5 h-5" /> },
+    { id: 'bias', label: '1. AI의 편향성', icon: <Brain className="w-5 h-5" /> },
+    { id: 'dilemma', label: '2. 윤리적 딜레마', icon: <Car className="w-5 h-5" /> },
+    { id: 'quiz', label: '3. 미니 퀴즈', icon: <HelpCircle className="w-5 h-5" /> },
+  ];
+
+  const quizQuestions = [
+    {
+      id: 1,
+      question: "인공지능이 편향성을 가지게 되는 가장 큰 이유는 무엇인가요?",
+      options: ["AI가 감정을 가지고 있어서", "인간이 제공한 데이터와 알고리즘 때문", "AI가 스스로 인간을 싫어하게 되어서", "컴퓨터 전력이 부족해서"],
+      correct: 1,
+      explanation: "인공지능은 인간이 만든 데이터와 알고리즘을 학습하기 때문에 그 속의 편견을 그대로 배울 수 있습니다."
+    },
+    {
+      id: 2,
+      question: "자율주행 자동차 사고 상황처럼 정답이 없는 도덕적 문제를 무엇이라고 하나요?",
+      options: ["알고리즘 오류", "데이터 불균형", "윤리적 딜레마", "시스템 업그레이드"],
+      correct: 2,
+      explanation: "트로리 딜레마와 같이 선택의 도덕적 정당성을 판단하기 어려운 상황을 윤리적 딜레마라고 합니다."
+    },
+    {
+      id: 3,
+      question: "인간의 편향과 AI의 편향의 차이점으로 옳은 것은?",
+      options: ["AI의 편향은 수정이 불가능하다", "인간은 수치로 편향성을 바로 알 수 있다", "AI의 편향은 시스템 전반에 큰 영향을 줄 수 있다", "둘 다 교육으로만 수정할 수 있다"],
+      correct: 2,
+      explanation: "AI의 편향은 해당 모델이 적용된 서비스나 시스템 전반에 걸쳐 광범위한 파급력을 가집니다."
+    }
+  ];
+
+  const handleQuizSubmit = () => {
+    let score = 0;
+    quizQuestions.forEach(q => {
+      if (selectedAnswers[q.id] === q.correct) score++;
+    });
+    setQuizScore(score);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
+      {/* Header */}
+      <header className="bg-white border-b sticky top-0 z-10">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-3">
+            <a 
+              href="../index.html" 
+              className="flex items-center gap-1 px-3 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors text-sm font-medium mr-2"
+              title="홈으로 돌아가기"
+            >
+              <Home className="w-4 h-4" />
+              <span>홈</span>
+            </a>
+            <div className="bg-indigo-600 p-2 rounded-lg">
+              <Bot className="text-white w-6 h-6" />
             </div>
+            <h1 className="text-xl font-bold text-slate-800">귀여운 AI와 함께 배우는 '인공지능 윤리'</h1>
+          </div>
+          <nav className="flex bg-slate-100 p-1 rounded-xl">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === tab.id ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                {tab.icon}
+                <span className="hidden sm:inline">{tab.label}</span>
+              </button>
+            ))}
+          </nav>
         </div>
-    </nav>
+      </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content container">
-            <span class="hero-tag">ART & TECHNOLOGY</span>
-            <h1 class="hero-title">AI 미술 윤리</h1>
-            <p class="hero-desc">
-                붓과 물감 대신 데이터와 알고리즘으로 그리는 시대,<br>
-                우리는 예술을 어떻게 정의해야 할까요?
-            </p>
-            <a href="#ethics-switch" class="btn-outline">탐색 시작하기</a>
-        </div>
-    </section>
-
-    <main class="container">
-        
-        <!-- Section 1: AI 미술윤리 스위치 -->
-        <section id="ethics-switch" class="text-center">
-            <div class="section-header">
-                <h2 class="section-title" style="font-style: italic;">Artistic Ethics Portal</h2>
-                <div class="divider"></div>
-                <p style="color: var(--text-gray); max-width: 600px; margin: 0 auto;">
-                    전통적인 예술의 가치관을 넘어, 새로운 인공지능 미술 윤리의 세계로 입장하시겠습니까? 
-                    아래 스위치를 켜서 수업을 시작하세요.
+      <main className="max-w-4xl mx-auto px-4 mt-8">
+        {/* Intro Tab */}
+        {activeTab === 'intro' && (
+          <div className="space-y-8 animate-in fade-in duration-500">
+            <div className="bg-indigo-600 rounded-3xl p-8 text-white relative overflow-hidden">
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold mb-4">안녕! 나는 너희의 AI 친구야 🤖</h2>
+                <p className="text-indigo-100 text-lg leading-relaxed max-w-2xl">
+                  인공지능은 아주 똑똑하지만, 우리가 가르쳐주는 데이터에 따라 편견을 가질 수도 있어. 
+                  오늘 우리 함께 AI가 어떻게 생각하고, 어려운 상황에서 어떤 선택을 해야 할지 고민해볼까?
                 </p>
+                {/* Modified button to navigate to the specified path */}
+                <a 
+                  href="./01/infrc.html"
+                  className="inline-flex mt-6 bg-white text-indigo-600 px-6 py-3 rounded-full font-bold items-center gap-2 hover:bg-indigo-50 transition-colors shadow-lg"
+                >
+                  수업 시작하기 <ArrowRight className="w-5 h-5" />
+                </a>
+              </div>
+              <div className="absolute right-0 bottom-0 opacity-20 transform translate-x-10 translate-y-10">
+                <Bot size={200} />
+              </div>
             </div>
 
-            <div class="switch-wrapper">
-                <span class="switch-label label-off" id="off-label">준비 중</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="portal-switch">
-                    <span class="slider"></span>
-                </label>
-                <span class="switch-label label-on" id="on-label">AI 미술 윤리 시작</span>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                  <ShieldCheck className="text-green-500" /> 오늘 배울 내용 1
+                </h3>
+                <p className="text-slate-600">인공지능이 왜 편견(편향성)을 가지게 되는지 알아봅니다.</p>
+              </div>
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                  <Car className="text-orange-500" /> 오늘 배울 내용 2
+                </h3>
+                <p className="text-slate-600">자율주행 자동차의 사례를 통해 윤리적 딜레마를 체험합니다.</p>
+              </div>
             </div>
-            
-            <p class="info-text">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
-                    <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                스위치를 켜면 심화 학습 페이지로 이동합니다.
-            </p>
-        </section>
+          </div>
+        )}
 
-        <!-- Section 2: AI 미술 현장 뉴스 -->
-        <section id="usecases" class="news-section">
-            <div class="section-header">
-                <h2 class="section-title">뉴스로 보는 AI 미술 현장</h2>
-                <p style="color: #a0aec0;">현실 미술계에서 AI는 어떤 파장을 일으키고 있을까요?</p>
+        {/* Bias Tab */}
+        {activeTab === 'bias' && (
+          <div className="space-y-6 animate-in slide-in-from-right duration-500">
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                <Brain className="text-pink-500" /> 왜 AI는 편견을 가질까요?
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="space-y-4">
+                  <div className="bg-pink-50 p-4 rounded-xl border-l-4 border-pink-400">
+                    <h4 className="font-bold text-pink-700">인간이 만든 데이터</h4>
+                    <p className="text-sm text-pink-600">AI는 인간이 만든 데이터를 학습해요. 그 데이터 속에 숨겨진 고정관념이나 편견을 그대로 배운답니다.</p>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-400">
+                    <h4 className="font-bold text-blue-700">알고리즘의 선택</h4>
+                    <p className="text-sm text-blue-600">특정 데이터를 더 중요하게 처리하도록 설계된 알고리즘은 한쪽으로 치우친 판단을 내릴 수 있어요.</p>
+                  </div>
+                </div>
+                <div className="bg-slate-50 p-6 rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-slate-200">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center text-xl">📚</div>
+                    <ArrowRight className="text-slate-400" />
+                    <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-3xl">🤖</div>
+                    <ArrowRight className="text-slate-400" />
+                    <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center text-xl">⚖️</div>
+                  </div>
+                  <p className="text-xs text-center text-slate-500">데이터 학습 → 인공지능 → 편향된 결과</p>
+                </div>
+              </div>
+
+              <div className="mt-10 p-6 bg-slate-900 rounded-2xl text-white">
+                <h3 className="font-bold mb-4">인간 vs AI 편향성 비교</h3>
+                <div className="grid grid-cols-3 gap-4 text-sm border-b border-slate-700 pb-2 mb-2 font-medium">
+                  <div>구분</div>
+                  <div className="text-blue-300">인간의 편향</div>
+                  <div className="text-indigo-300">AI의 편향</div>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-xs py-2 border-b border-slate-800">
+                  <div className="font-medium">원인</div>
+                  <div>문화, 교육, 경험</div>
+                  <div>학습 데이터, 알고리즘</div>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-xs py-2 border-b border-slate-800">
+                  <div className="font-medium">수정</div>
+                  <div>자각 및 교육 필요</div>
+                  <div>데이터/알고리즘 수정</div>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-xs py-2">
+                  <div className="font-medium">영향력</div>
+                  <div>개인/집단에 국한</div>
+                  <div>시스템 전반에 파급</div>
+                </div>
+              </div>
             </div>
+          </div>
+        )}
 
-            <div class="news-grid">
-                <!-- Case 1 -->
-                <article class="news-card">
-                    <span class="badge">Controversy</span>
-                    <h3>미술 대회 1위 차지한 AI 작품</h3>
-                    <p>2022년 미국 콜로라도 주립 박람회 미술대회에서 AI '미드저니'로 생성한 작품 &lt;스페이스 오페라 극장&gt;이 1위를 차지하며 논쟁의 중심이 되었습니다.</p>
-                    <div class="news-footer">"예술의 도구인가, 인간의 창의성 찬탈인가?"</div>
-                </article>
+        {/* Dilemma Tab */}
+        {activeTab === 'dilemma' && (
+          <div className="space-y-6 animate-in slide-in-from-right duration-500">
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+              <h2 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                <Car className="text-orange-500" /> 윤리적 딜레마: 누구를 구할까요?
+              </h2>
+              <p className="text-slate-500 mb-6 italic">정답이 없는 문제, '트로리 딜레마' 상황에 놓인 AI의 선택을 생각해보세요.</p>
 
-                <!-- Case 2 -->
-                <article class="news-card">
-                    <span class="badge" style="background-color: #3182ce;">Restoration</span>
-                    <h3>'더 넥스트 렘브란트' 프로젝트</h3>
-                    <p>렘브란트의 화풍을 완벽히 학습한 AI가 화가가 살아있었다면 그렸을 법한 '새로운 렘브란트 풍' 작품을 만들어내 전시되었습니다.</p>
-                    <div class="news-footer">"데이터로 부활한 거장의 화풍"</div>
-                </article>
+              <div className="bg-orange-50 border border-orange-100 p-6 rounded-2xl mb-8">
+                <p className="text-orange-900 font-medium mb-4">🚗 상황: 자율주행 자동차의 브레이크가 고장 났습니다!</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <button 
+                    onClick={() => setDilemmaChoice('A')}
+                    className={`p-4 rounded-xl border-2 transition-all text-left ${dilemmaChoice === 'A' ? 'border-orange-500 bg-white shadow-md' : 'border-white bg-white/50 hover:bg-white'}`}
+                  >
+                    <div className="text-2xl mb-2">👵👴</div>
+                    <div className="font-bold">A: 노인 보행자 보호</div>
+                    <p className="text-xs text-slate-500 mt-1">경험과 지혜를 존중하여 어르신들을 먼저 보호해야 할까요?</p>
+                  </button>
+                  <button 
+                    onClick={() => setDilemmaChoice('B')}
+                    className={`p-4 rounded-xl border-2 transition-all text-left ${dilemmaChoice === 'B' ? 'border-orange-500 bg-white shadow-md' : 'border-white bg-white/50 hover:bg-white'}`}
+                  >
+                    <div className="text-2xl mb-2">🧒👶</div>
+                    <div className="font-bold">B: 어린이 보행자 보호</div>
+                    <p className="text-xs text-slate-500 mt-1">앞날이 창창한 어린이들을 먼저 보호해야 할까요?</p>
+                  </button>
+                </div>
+              </div>
 
-                <!-- Case 3 -->
-                <article class="news-card">
-                    <span class="badge" style="background-color: #805ad5;">Ethics</span>
-                    <h3>소니 사진 어워드 수상 거부</h3>
-                    <p>사진작가 보리스 엘다크젠은 권위 있는 어워드 수상자로 선정되었으나, 해당 작품이 AI 제작물임을 밝히며 수상을 거부했습니다.</p>
-                    <div class="news-footer">"AI 생성물은 사진이 될 수 있는가?"</div>
-                </article>
+              {dilemmaChoice && (
+                <div className="p-6 bg-indigo-50 rounded-2xl animate-bounce-short">
+                  <h4 className="font-bold text-indigo-800 mb-2">🤔 생각할 거리:</h4>
+                  <p className="text-sm text-indigo-700 leading-relaxed">
+                    당신의 선택은 가치관에 기반한 결정입니다. MIT의 연구 결과에 따르면, 서구권은 <strong>'어린이 우선'</strong>, 동양권은 상대적으로 <strong>'노인 우선'</strong> 성향이 높게 나타나기도 했어요. 
+                    이처럼 지역이나 문화에 따라 AI의 윤리 기준이 달라질 수 있다면, 우리는 어떻게 합의해야 할까요?
+                  </p>
+                  <div className="mt-4 flex gap-2">
+                    <span className="px-3 py-1 bg-white rounded-full text-xs font-bold text-indigo-600">#공정성</span>
+                    <span className="px-3 py-1 bg-white rounded-full text-xs font-bold text-indigo-600">#이익고려</span>
+                    <span className="px-3 py-1 bg-white rounded-full text-xs font-bold text-indigo-600">#사회적합의</span>
+                  </div>
+                </div>
+              )}
             </div>
-        </section>
+          </div>
+        )}
 
-        <!-- Section 3: AI 미술 윤리 고민 -->
-        <section id="ethics">
-            <div class="ethics-flex">
-                <aside class="ethics-aside">
-                    <h2>핵심 윤리 쟁점</h2>
-                    <p style="color: var(--text-gray); margin-bottom: 2rem;">실제 사례들은 우리에게 예술의 본질에 대한 질문을 던집니다.</p>
-                    <div class="quote-box">
-                        "예술적 의도는 인간에게 있는가, 아니면 알고리즘에게 있는가?"
+        {/* Quiz Tab */}
+        {activeTab === 'quiz' && (
+          <div className="space-y-6 animate-in slide-in-from-right duration-500 pb-10">
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                <HelpCircle className="text-purple-500" /> 오늘 배운 내용 복습하기
+              </h2>
+
+              <div className="space-y-8">
+                {quizQuestions.map((q, idx) => (
+                  <div key={q.id} className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+                    <p className="font-bold mb-4 text-slate-800">{idx + 1}. {q.question}</p>
+                    <div className="space-y-2">
+                      {q.options.map((opt, optIdx) => (
+                        <button
+                          key={optIdx}
+                          onClick={() => setSelectedAnswers({...selectedAnswers, [q.id]: optIdx})}
+                          className={`w-full text-left p-4 rounded-xl border transition-all ${
+                            selectedAnswers[q.id] === optIdx 
+                              ? 'border-purple-500 bg-purple-50 text-purple-700 font-medium' 
+                              : 'border-slate-200 bg-white hover:border-slate-300'
+                          }`}
+                        >
+                          {optIdx + 1}) {opt}
+                        </button>
+                      ))}
                     </div>
-                </aside>
-
-                <div class="ethics-content">
-                    <div class="ethics-node">
-                        <h4>1. 저작권과 학습 데이터</h4>
-                        <p style="color: var(--text-gray);">원작자의 동의 없는 학습은 정당할까요? 데이터 주권과 창작자의 권리에 대해 논의해 봅시다.</p>
-                        <button class="discussion-btn" data-target="disc-1">전문가 견해 보기 +</button>
-                        <div id="disc-1" class="discussion-panel">
-                            예술가들은 대규모 소송을 통해 AI 학습 데이터의 정당한 보상 체계 마련을 요구하고 있습니다.
+                    {quizScore !== null && (
+                      <div className={`mt-4 p-4 rounded-xl flex gap-3 text-sm ${selectedAnswers[q.id] === q.correct ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                        {selectedAnswers[q.id] === q.correct ? <CheckCircle2 className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                        <div>
+                          <p className="font-bold">{selectedAnswers[q.id] === q.correct ? '정답입니다!' : '틀렸어요.'}</p>
+                          <p className="mt-1 opacity-90">{q.explanation}</p>
                         </div>
-                    </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
 
-                    <div class="ethics-node">
-                        <h4>2. 창작자의 정의</h4>
-                        <p style="color: var(--text-gray);">명령어를 입력하는 주체를 화가라고 부를 수 있을까요? 창의성과 기술 사용의 경계를 탐구합니다.</p>
-                        <button class="discussion-btn" data-target="disc-2">전문가 견해 보기 +</button>
-                        <div id="disc-2" class="discussion-panel">
-                            현재 법적 해석은 인간의 창의적 기여도가 증명될 때만 저작권을 부분적으로 인정하는 추세입니다.
-                        </div>
-                    </div>
+              {quizScore === null ? (
+                <button 
+                  onClick={handleQuizSubmit}
+                  disabled={Object.keys(selectedAnswers).length < quizQuestions.length}
+                  className="w-full mt-8 bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  결과 확인하기
+                </button>
+              ) : (
+                <div className="mt-8 text-center p-8 bg-indigo-600 rounded-3xl text-white">
+                  <p className="text-xl opacity-90 mb-2">수고했어! 너의 점수는...</p>
+                  <h3 className="text-5xl font-black mb-4">{quizScore} / {quizQuestions.length}</h3>
+                  <p className="mb-6">인공지능 윤리 박사가 되었네! 오늘 배운 내용을 잊지 마!</p>
+                  <button 
+                    onClick={() => {setQuizScore(null); setSelectedAnswers({});}}
+                    className="bg-white text-indigo-600 px-6 py-2 rounded-full font-bold text-sm"
+                  >
+                    다시 풀어보기
+                  </button>
                 </div>
+              )}
             </div>
-        </section>
+          </div>
+        )}
+      </main>
 
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-inner">
-                <div>
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">AI ART CLASS</h4>
-                    <p style="font-size: 0.85rem; color: #718096;">본 페이지는 미술 수업을 위한 교육용 자료입니다.</p>
-                </div>
-                <div style="text-align: right;">
-                    <p style="font-size: 0.9rem; font-weight: 700;">Teacher</p>
-                    <p style="font-size: 0.85rem; color: #718096;">꿈꾸는 미술실<br>art.edu@school.kr</p>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2024 AI Art Education Program. All rights reserved.
-            </div>
+      {/* Footer / Summary Mobile Nav */}
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t py-2 px-4 md:hidden">
+        <div className="flex justify-around">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex flex-col items-center gap-1 p-2 ${activeTab === tab.id ? 'text-indigo-600' : 'text-slate-400'}`}
+            >
+              {tab.icon}
+              <span className="text-[10px] font-bold">{tab.label.split('.')[0]}</span>
+            </button>
+          ))}
         </div>
-    </footer>
+      </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. 테마 스위칭 로직
-            const themeBtn = document.getElementById('theme-btn');
-            const sunIcon = document.getElementById('sun-icon');
-            const moonIcon = document.getElementById('moon-icon');
-            const body = document.body;
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes bounce-short {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-short {
+          animation: bounce-short 2s infinite;
+        }
+      `}} />
+    </div>
+  );
+};
 
-            themeBtn.addEventListener('click', () => {
-                const currentTheme = body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
-                body.setAttribute('data-theme', newTheme);
-                
-                // 아이콘 전환
-                if (newTheme === 'dark') {
-                    sunIcon.classList.remove('hidden');
-                    moonIcon.classList.add('hidden');
-                } else {
-                    sunIcon.classList.add('hidden');
-                    moonIcon.classList.remove('hidden');
-                }
-            });
-
-            // 2. 수업 입장 스위치 로직 (에러 수정됨)
-            const portalSwitch = document.getElementById('portal-switch');
-            const offLabel = document.getElementById('off-label');
-            const onLabel = document.getElementById('on-label');
-
-            portalSwitch.addEventListener('change', (e) => {
-                if(e.target.checked) {
-                    onLabel.style.color = 'var(--art-accent)';
-                    offLabel.style.color = '#cbd5e0';
-                    
-                    // URL 이동 에러 방지를 위해 실제 경로가 확인되기 전까지는 콘솔 출력으로 대체
-                    // 실제 서비스 환경에서는 유효한 절대 경로 또는 상대 경로를 입력해야 합니다.
-                    console.log("Portal Active: 수업 페이지로 이동을 준비합니다.");
-                    
-                    /* setTimeout(() => {
-                        // 유효하지 않은 경로는 SyntaxError를 유발할 수 있으므로 주의가 필요합니다.
-                        // window.location.href = "/your-valid-path/index.html"; 
-                    }, 600);
-                    */
-                } else {
-                    onLabel.style.color = 'var(--text-dark)';
-                    offLabel.style.color = '#a0aec0';
-                }
-            });
-
-            // 3. 윤리 쟁점 토글 로직
-            document.querySelectorAll('.discussion-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const targetId = btn.getAttribute('data-target');
-                    const panel = document.getElementById(targetId);
-                    
-                    if(panel.classList.contains('show')) {
-                        panel.classList.remove('show');
-                        btn.textContent = '전문가 견해 보기 +';
-                    } else {
-                        panel.classList.add('show');
-                        btn.textContent = '닫기 -';
-                    }
-                });
-            });
-
-            // 4. 내비게이션 부드러운 스크롤
-            document.querySelectorAll('nav a, .btn-outline').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const href = link.getAttribute('href');
-                    if (href && href.startsWith('#')) {
-                        e.preventDefault();
-                        const target = document.querySelector(href);
-                        if (target) {
-                            window.scrollTo({
-                                top: target.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+export default App;
