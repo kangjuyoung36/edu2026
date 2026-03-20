@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ART: 미래 미술의 경계와 윤리</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+        
+        :root {
+            /* Light Mode Variables */
+            --art-primary: #4a5568;
+            --art-accent: #e53e3e;
+            --art-bg: #fcfaf8;
+            --text-dark: #1a202c;
+            --text-gray: #4a5568;
+            --white: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --switch-bg: #cbd5e0;
+            --quote-bg: #fff5f5;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode Variables */
+            --art-primary: #a0aec0;
+            --art-accent: #ff4d4d;
+            --art-bg: #121212;
+            --text-dark: #f7fafc;
+            --text-gray: #cbd5e0;
+            --white: #1e1e1e;
+            --nav-bg: rgba(18, 18, 18, 0.9);
+            --card-bg: #1e1e1e;
+            --border-color: #333333;
+            --switch-bg: #4a5568;
+            --quote-bg: #2d1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--art-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1547891301-1749945012a5?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white; 
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-tag {
+            font-size: 1.1rem;
+            letter-spacing: 0.2em;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .hero-desc {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 1px solid white;
+            padding: 1rem 2.5rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: #000;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-dark);
+            letter-spacing: -0.05em;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+            }
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--art-accent);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border-color);
+        }
+
+        /* Main Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--art-accent);
+            margin: 1.5rem auto;
+        }
+
+        /* Switch Section */
+        .switch-wrapper {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 100px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 650px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+        }
+
+        .switch-wrapper:hover {
+            border-color: var(--art-accent);
+            transform: translateY(-5px);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: var(--switch-bg);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 40px;
+            width: 40px;
+            left: 5px;
+            bottom: 5px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider {
+            background-color: var(--art-accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(50px);
+        }
+
+        .switch-label {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .label-off { color: #a0aec0; }
+        .label-on { color: var(--text-dark); }
+
+        .info-text {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #a0aec0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* News Section */
+        .news-section {
+            background-color: #1a202c;
+            color: white;
+            border-radius: 3rem;
+            margin: 2rem 0;
+            padding: 6rem 2rem;
+        }
+
+        [data-theme="dark"] .news-section {
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .news-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            border-color: var(--art-accent);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            background-color: var(--art-accent);
+            color: white;
+        }
+
+        .news-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-card p {
+            font-size: 0.95rem;
+            color: #a0aec0;
+            margin-bottom: 1.5rem;
+        }
+
+        .news-footer {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #718096;
+        }
+
+        /* Ethics Section */
+        .ethics-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .ethics-flex {
+                flex-direction: row;
+            }
+            .ethics-aside { width: 33.33%; }
+            .ethics-content { width: 66.66%; }
+        }
+
+        .ethics-aside h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quote-box {
+            background-color: var(--quote-bg);
+            padding: 1.5rem;
+            border-left: 4px solid var(--art-accent);
+            border-radius: 0 0.75rem 0.75rem 0;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .ethics-node {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .ethics-node:last-child {
+            margin-bottom: 0;
+            border-left-color: transparent;
+        }
+
+        .ethics-node:before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background-color: var(--art-primary);
+            border-radius: 50%;
+        }
+
+        .ethics-node h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .discussion-btn {
+            background: none;
+            border: none;
+            color: var(--art-accent);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .discussion-panel {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .discussion-panel.show {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-color);
+            background: var(--white);
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-inner { flex-direction: row; }
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .text-center { text-align: center; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner container">
+            <a href="#" class="logo">AI ART CLASS</a>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#ethics-switch">수업 입장</a>
+                    <a href="#usecases">현장 뉴스</a>
+                    <a href="#ethics">미술 윤리</a>
+                </div>
+                <button id="theme-btn" class="theme-toggle" title="테마 변경">
+                    <svg id="sun-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content container">
+            <span class="hero-tag">ART & TECHNOLOGY</span>
+            <h1 class="hero-title">AI 미술 윤리</h1>
+            <p class="hero-desc">
+                붓과 물감 대신 데이터와 알고리즘으로 그리는 시대,<br>
+                우리는 예술을 어떻게 정의해야 할까요?
+            </p>
+            <a href="#ethics-switch" class="btn-outline">탐색 시작하기</a>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <!-- Section 1: AI 미술윤리 스위치 -->
+        <section id="ethics-switch" class="text-center">
+            <div class="section-header">
+                <h2 class="section-title" style="font-style: italic;">Artistic Ethics Portal</h2>
+                <div class="divider"></div>
+                <p style="color: var(--text-gray); max-width: 600px; margin: 0 auto;">
+                    전통적인 예술의 가치관을 넘어, 새로운 인공지능 미술 윤리의 세계로 입장하시겠습니까? 
+                    아래 스위치를 켜서 수업을 시작하세요.
+                </p>
+            </div>
+
+            <div class="switch-wrapper">
+                <span class="switch-label label-off" id="off-label">준비 중</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="portal-switch">
+                    <span class="slider"></span>
+                </label>
+                <span class="switch-label label-on" id="on-label">AI 미술 윤리 시작</span>
+            </div>
+            
+            <p class="info-text">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                    <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                스위치를 켜면 심화 학습 페이지로 이동합니다.
+            </p>
+        </section>
+
+        <!-- Section 2: AI 미술 현장 뉴스 -->
+        <section id="usecases" class="news-section">
+            <div class="section-header">
+                <h2 class="section-title">뉴스로 보는 AI 미술 현장</h2>
+                <p style="color: #a0aec0;">현실 미술계에서 AI는 어떤 파장을 일으키고 있을까요?</p>
+            </div>
+
+            <div class="news-grid">
+                <!-- Case 1 -->
+                <article class="news-card">
+                    <span class="badge">Controversy</span>
+                    <h3>미술 대회 1위 차지한 AI 작품</h3>
+                    <p>2022년 미국 콜로라도 주립 박람회 미술대회에서 AI '미드저니'로 생성한 작품 &lt;스페이스 오페라 극장&gt;이 1위를 차지하며 논쟁의 중심이 되었습니다.</p>
+                    <div class="news-footer">"예술의 도구인가, 인간의 창의성 찬탈인가?"</div>
+                </article>
+
+                <!-- Case 2 -->
+                <article class="news-card">
+                    <span class="badge" style="background-color: #3182ce;">Restoration</span>
+                    <h3>'더 넥스트 렘브란트' 프로젝트</h3>
+                    <p>렘브란트의 화풍을 완벽히 학습한 AI가 화가가 살아있었다면 그렸을 법한 '새로운 렘브란트 풍' 작품을 만들어내 전시되었습니다.</p>
+                    <div class="news-footer">"데이터로 부활한 거장의 화풍"</div>
+                </article>
+
+                <!-- Case 3 -->
+                <article class="news-card">
+                    <span class="badge" style="background-color: #805ad5;">Ethics</span>
+                    <h3>소니 사진 어워드 수상 거부</h3>
+                    <p>사진작가 보리스 엘다크젠은 권위 있는 어워드 수상자로 선정되었으나, 해당 작품이 AI 제작물임을 밝히며 수상을 거부했습니다.</p>
+                    <div class="news-footer">"AI 생성물은 사진이 될 수 있는가?"</div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section 3: AI 미술 윤리 고민 -->
+        <section id="ethics">
+            <div class="ethics-flex">
+                <aside class="ethics-aside">
+                    <h2>핵심 윤리 쟁점</h2>
+                    <p style="color: var(--text-gray); margin-bottom: 2rem;">실제 사례들은 우리에게 예술의 본질에 대한 질문을 던집니다.</p>
+                    <div class="quote-box">
+                        "예술적 의도는 인간에게 있는가, 아니면 알고리즘에게 있는가?"
+                    </div>
+                </aside>
+
+                <div class="ethics-content">
+                    <div class="ethics-node">
+                        <h4>1. 저작권과 학습 데이터</h4>
+                        <p style="color: var(--text-gray);">원작자의 동의 없는 학습은 정당할까요? 데이터 주권과 창작자의 권리에 대해 논의해 봅시다.</p>
+                        <button class="discussion-btn" data-target="disc-1">전문가 견해 보기 +</button>
+                        <div id="disc-1" class="discussion-panel">
+                            예술가들은 대규모 소송을 통해 AI 학습 데이터의 정당한 보상 체계 마련을 요구하고 있습니다.
+                        </div>
+                    </div>
+
+                    <div class="ethics-node">
+                        <h4>2. 창작자의 정의</h4>
+                        <p style="color: var(--text-gray);">명령어를 입력하는 주체를 화가라고 부를 수 있을까요? 창의성과 기술 사용의 경계를 탐구합니다.</p>
+                        <button class="discussion-btn" data-target="disc-2">전문가 견해 보기 +</button>
+                        <div id="disc-2" class="discussion-panel">
+                            현재 법적 해석은 인간의 창의적 기여도가 증명될 때만 저작권을 부분적으로 인정하는 추세입니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">AI ART CLASS</h4>
+                    <p style="font-size: 0.85rem; color: #718096;">본 페이지는 미술 수업을 위한 교육용 자료입니다.</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="font-size: 0.9rem; font-weight: 700;">Teacher</p>
+                    <p style="font-size: 0.85rem; color: #718096;">꿈꾸는 미술실<br>art.edu@school.kr</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2024 AI Art Education Program. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. 테마 스위칭 로직
+            const themeBtn = document.getElementById('theme-btn');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            const body = document.body;
+
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                body.setAttribute('data-theme', newTheme);
+                
+                // 아이콘 전환
+                if (newTheme === 'dark') {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+            });
+
+            // 2. 수업 입장 스위치 로직 (에러 수정됨)
+            const portalSwitch = document.getElementById('portal-switch');
+            const offLabel = document.getElementById('off-label');
+            const onLabel = document.getElementById('on-label');
+
+            portalSwitch.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    onLabel.style.color = 'var(--art-accent)';
+                    offLabel.style.color = '#cbd5e0';
+                    
+                    // URL 이동 에러 방지를 위해 실제 경로가 확인되기 전까지는 콘솔 출력으로 대체
+                    // 실제 서비스 환경에서는 유효한 절대 경로 또는 상대 경로를 입력해야 합니다.
+                    console.log("Portal Active: 수업 페이지로 이동을 준비합니다.");
+                    
+                    /* setTimeout(() => {
+                        // 유효하지 않은 경로는 SyntaxError를 유발할 수 있으므로 주의가 필요합니다.
+                        // window.location.href = "/your-valid-path/index.html"; 
+                    }, 600);
+                    */
+                } else {
+                    onLabel.style.color = 'var(--text-dark)';
+                    offLabel.style.color = '#a0aec0';
+                }
+            });
+
+            // 3. 윤리 쟁점 토글 로직
+            document.querySelectorAll('.discussion-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('data-target');
+                    const panel = document.getElementById(targetId);
+                    
+                    if(panel.classList.contains('show')) {
+                        panel.classList.remove('show');
+                        btn.textContent = '전문가 견해 보기 +';
+                    } else {
+                        panel.classList.add('show');
+                        btn.textContent = '닫기 -';
+                    }
+                });
+            });
+
+            // 4. 내비게이션 부드러운 스크롤
+            document.querySelectorAll('nav a, .btn-outline').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
